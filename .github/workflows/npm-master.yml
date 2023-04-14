@@ -34,7 +34,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - run: aws lambda update-function-code --function-name my-function --zip-file fileb://function.zip
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:

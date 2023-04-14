@@ -10,7 +10,8 @@ on:
 # jobs 단위로 개별 서버(정확히는 Docker 컨테이너 단위라고 한다.)에서 작업이 수행된다.
 # 각 작업은 병렬로 실행 된다고 하는데, needs: build와 같이 표시해서 기다릴 수도 있다.
 jobs:
-  build:
+  build_and_deploy:
+    name: lambda-runtime
     # Ubuntu, Windows, MacOS를 지원한다.
     runs-on: ubuntu-latest
 
@@ -32,11 +33,25 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      # npm ci는 npm install과 같은 기능을 수행한다. 자세한 내용은 아래 링크 참조.
-      - run: npm ci
-      # --if-present 옵션은 npm 스크립트가 존재할 때만 실행시키라는 의미이다.
-      # 만약 build 스크립트가 없는 경우, 오류 없이 지나간다.
-      - run: npm run build --if-present
+
+      - run: aws lambda update-function-code --function-name my-function --zip-file fileb://function.zip
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: 707137375155
+          aws-secret-access-key: ${{ secrets.AWS_SSAFY_BOT_PW }}
+          aws-region: ap-northeast-2
+          
+      - name: npm install
         env:
           CI: true
+          API_KEY: ${{ secrets.HOOK_URL }}
+        run: npm ci
+        
+      # --if-present 옵션은 npm 스크립트가 존재할 때만 실행시키라는 의미이다.
+      - name: deploy
+        run: |
+          zip -j deploy.zip ./* #--> Zip the Code As we know lambda function accept the zip file.
+          aws lambda update-function-code --function-name=ssafy-attendance-notification-bot --zip-file=fileb://deploy.zip 
+        env:
           API_KEY: ${{ secrets.HOOK_URL }}

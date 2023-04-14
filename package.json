@@ -1,0 +1,19 @@
+{
+  "name": "mattermost_bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"run test\"",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Seeun Choi",
+  "license": "ISC",
+  "dependencies": {
+    "aws-xray-sdk": "^3.5.0",
+    "forever": "^4.0.3",
+    "node-mattermost": "^0.0.1",
+    "node-schedule": "^2.1.1"
+  }
+}

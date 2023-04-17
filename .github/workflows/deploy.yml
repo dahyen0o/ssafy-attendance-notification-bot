@@ -15,9 +15,7 @@ jobs:
     # Ubuntu, Windows, MacOS를 지원한다.
     runs-on: ubuntu-latest
 
-    # 영상에서도 소개됐는데, 변수 개념으로 생각하면 된다.
     # node-version 과 같이 배열로 돼있으면, 해당 원소를 순회하면서 작업이 반복해서 실행된다.
-    # matrix 때문인지 배열만 되는 것 같다. (TODO)
     # 응용해서 runs-on에 여러 OS에서 돌릴 수도 있다.
     strategy:
       matrix:
@@ -41,16 +39,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SSAFY_BOT_PW }}
           aws-region: ap-northeast-2
           
+      - name: Set env variables
+        working-directory: ./
+        run: |
+          pwd
+          touch .env
+          echo HOOK_URL = ${{ secrets.HOOK_URL }} >> .env
+          cat .env
+          
       - name: npm install
-        env:
-          CI: true
-          API_KEY: ${{ secrets.HOOK_URL }}
+        working-directory: ./
         run: npm ci
         
       # --if-present 옵션은 npm 스크립트가 존재할 때만 실행시키라는 의미이다.
-      - name: deploy
-        run: |
-          zip -r function.zip .
-          aws lambda update-function-code --function-name ssafy-attendance-notification-bot --zip-file fileb://function.zip 
-        env:
-          API_KEY: ${{ secrets.HOOK_URL }}
+      - name: Deploy
+        working-directory: ./
+        run: npm run build

@@ -37,7 +37,7 @@ const testRule = new Schedule.RecurrenceRule();
 testRule.tz = 'Asia/Seoul';
 testRule.dayOfWeek = [1, 2, 3, 4, 5];
 testRule.hour = 10;
-testRule.minute = 37;
+testRule.minute = 54;
 
 const testJob = Schedule.scheduleJob(testRule, function () {
   mattermost.send({

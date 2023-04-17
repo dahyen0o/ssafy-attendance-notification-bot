@@ -50,7 +50,7 @@ jobs:
       # --if-present 옵션은 npm 스크립트가 존재할 때만 실행시키라는 의미이다.
       - name: deploy
         run: |
-          zip -j deploy.zip ./* #--> Zip the Code As we know lambda function accept the zip file.
-          aws lambda update-function-code --function-name=ssafy-attendance-notification-bot --zip-file=fileb://deploy.zip 
+          zip -r function.zip .
+          aws lambda update-function-code --function-name ssafy-attendance-notification-bot --zip-file fileb://function.zip 
         env:
           API_KEY: ${{ secrets.HOOK_URL }}

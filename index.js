@@ -32,3 +32,17 @@ const leaveJob = Schedule.scheduleJob(leaveRule, function () {
     username: "퇴실체크 봇",
   });
 });
+
+const testRule = new Schedule.RecurrenceRule();
+testRule.tz = 'Asia/Seoul';
+testRule.dayOfWeek = [1, 2, 3, 4, 5];
+testRule.hour = 10;
+testRule.minute = 37;
+
+const testJob = Schedule.scheduleJob(testRule, function () {
+  mattermost.send({
+    text: "테스트",
+    channel: "off-topic",
+    username: "테스트 봇",
+  });
+});

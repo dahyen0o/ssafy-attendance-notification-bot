@@ -10,10 +10,10 @@ Mattermost 내 ```9반 소통 채널```에서 정해진 타이밍에 알림을 �
 ### 현재 알림
 - 평일 아침 입실 알림
 - 평일 저녁 퇴실 알림
+- 생일 알림 (23.04.21)
 
 ### 추가 예정
 - 매일 아침 날씨 알림
-- 생일 알림
 
 <br/>
 
@@ -21,5 +21,5 @@ Mattermost 내 ```9반 소통 채널```에서 정해진 타이밍에 알림을 �
 
 |분야|기술 스택|담당자|
 |---|---|---|
-|Server|Node.js|@dahyen0o|
+|Server|Node.js (node-schedule)|@dahyen0o|
 |Infra, DevOps|Github Actions, AWS EC2|@dahyen0o|

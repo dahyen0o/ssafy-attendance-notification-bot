@@ -1,7 +1,8 @@
 const Mattermost = require("node-mattermost");
 const Schedule = require("node-schedule");
 
-const hookurl = process.env.HOOK_URL;
+// const hookurl = process.env.HOOK_URL;
+const hookurl = "https://meeting.ssafy.com/hooks/xp798kjhgfgybjfak1iikcgx1r";
 const mattermost = new Mattermost(hookurl);
 
 /**
@@ -21,16 +22,16 @@ const presentJob = Schedule.scheduleJob(presentRule, function () {
   });
 });
 
-const leaveRule = new Schedule.RecurrenceRule();
+let leaveRule = new Schedule.RecurrenceRule();
 leaveRule.tz = "Asia/Seoul";
 leaveRule.dayOfWeek = [1, 2, 3, 4, 5];
-leaveRule.hour = 17;
-leaveRule.minute = 59;
-leaveRule.second = 50;
+leaveRule.hour = 18;
+leaveRule.minute = 0;
+leaveRule.second = 0;
 
 const leaveJob = Schedule.scheduleJob(leaveRule, function () {
   mattermost.send({
-    text: "@here 10초 뒤 퇴실체크 하세요",
+    text: "@here 퇴실하세요🚀",
     channel: "off-topic",
     username: "퇴실체크 봇",
   });

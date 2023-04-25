@@ -51,7 +51,13 @@ jobs:
         working-directory: ./
         run: npm ci
         
-      # --if-present 옵션은 npm 스크립트가 존재할 때만 실행시키라는 의미이다.
-#       - name: Deploy
-#         working-directory: ./
-#         run: npm run build
+      - name: Run scripts in server
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SSH_PEM_KEY }}
+          host: ${{ secrets.AWS_HOST }}
+          username: ubuntu
+          script: |
+            cd ssafy-attendance-notification-bot
+            git fetch -p
+            git pull origin master

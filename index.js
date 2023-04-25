@@ -71,6 +71,7 @@ xlsxFile("./ssafy_09_09_birthday_list.xlsx").then((members) => {
       Schedule.scheduleJob(birthdayRule, function () {
         mattermost.send({
           text:
+            `@here \n` +
             `#### ✨오늘은 ${name}의 생일입니다✨\n` +
             `${jujup}\n\n` +
             `생일 축하해^^ 🎉🥰`,

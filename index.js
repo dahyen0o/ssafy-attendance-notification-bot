@@ -1,8 +1,7 @@
 const Mattermost = require("node-mattermost");
 const Schedule = require("node-schedule");
 
-// const hookurl = process.env.HOOK_URL;
-const hookurl = "https://meeting.ssafy.com/hooks/xp798kjhgfgybjfak1iikcgx1r";
+const hookurl = process.env.HOOK_URL;
 const mattermost = new Mattermost(hookurl);
 
 /**
